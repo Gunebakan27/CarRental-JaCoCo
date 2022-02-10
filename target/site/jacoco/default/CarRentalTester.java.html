@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CarRentalTester.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCo-Test</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">CarRentalTester.java</span></div><h1>CarRentalTester.java</h1><pre class="source lang-java linenums">/*
+ * Console based program that will allow a customer to make a partial booking
+ * of a vehicle through a car hire company.
+ * Max Sova CSE1OFX Assessment 3
+ */
+
+import java.time.LocalDate;
+import java.util.Scanner;
+
+/**
+ * This is the overall entry point for the program with the following functions:
+ * Controlling access to the main menu, customer details and car booking info.
+ * Main method invokes methods stored in other classes and captures key values.
+ * Key values are passed as parameters to other instantiated objects.
+ *
+ * @author Max Sova CSE1OFX Assessment 3
+ */
+<span class="nc" id="L18">public class CarRentalTester {</span>
+
+    private MenuDisplay menu;
+    private Customer customer;
+    private CarBooking carBooking;
+    private CarAndBookingDates carAndBookingDates;
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+
+        //Declare local variables
+        String customerName;
+        String customerEmail;
+        String customerAddress;
+
+        //Print list of cars
+<span class="nc" id="L36">        MenuDisplay menu = new MenuDisplay();</span>
+
+        //Calculate number of cars in the list
+<span class="nc" id="L39">        int carsAvailable = menu.displayCarList();</span>
+
+        //Present user with choice of either makig a booking (1) or exiting (2)
+<span class="nc" id="L42">        int option = menu.getSelection();</span>
+
+        //Start booking iteration
+        do {
+<span class="nc bnc" id="L46" title="All 2 branches missed.">            if (option == 1) {//evaluate if user chooses to make boking</span>
+
+                //Receive and format start of hire date
+<span class="nc" id="L49">                CarAndBookingDates cb1 = new CarAndBookingDates();</span>
+                //Receive and save selected car number
+<span class="nc" id="L51">                int carSelection = cb1.carSelection(carsAvailable);</span>
+<span class="nc" id="L52">                System.out.print(&quot;\n\tEnter booking start date.\n&quot;);</span>
+
+<span class="nc" id="L54">                LocalDate startDate = cb1.getCarBookingDateFull();</span>
+                LocalDate endDate;//Declare endDate for validation
+
+                do {//Enter hire end date, iterate if invalid
+                    //Receive and format end of hire date
+<span class="nc" id="L59">                    CarAndBookingDates cb2 = new CarAndBookingDates();</span>
+<span class="nc" id="L60">                    System.out.println(&quot;\n\tEnter booking end date.&quot;);</span>
+<span class="nc" id="L61">                    endDate = cb2.getCarBookingDateFull();</span>
+
+                    //Check if end date is greater than start date
+<span class="nc bnc" id="L64" title="All 2 branches missed.">                    if (endDate.compareTo(startDate) &lt; 1) {//invalid option</span>
+<span class="nc" id="L65">                        System.out.println(&quot;End date is not greater than start&quot;</span>
+                                + &quot; day! Please re-enter.&quot;);
+                    }
+
+<span class="nc bnc" id="L69" title="All 2 branches missed.">                } while (endDate.compareTo(startDate) &lt; 1);//End of validation</span>
+
+<span class="nc" id="L71">                Scanner keyboard = new Scanner(System.in);//Initialyse scanner</span>
+
+                //Receive customer detais as local variabes    
+<span class="nc" id="L74">                System.out.print(&quot;\n\tYour name: &quot;);</span>
+<span class="nc" id="L75">                customerName = keyboard.nextLine();</span>
+
+<span class="nc" id="L77">                System.out.print(&quot;\tYour email: &quot;);</span>
+<span class="nc" id="L78">                customerEmail = keyboard.nextLine();</span>
+
+<span class="nc" id="L80">                System.out.print(&quot;\tYour residential address: &quot;);</span>
+<span class="nc" id="L81">                customerAddress = keyboard.nextLine();</span>
+
+                //Pass customer details as parameters to Customer
+<span class="nc" id="L84">                Customer cm = new Customer(customerName, customerEmail,</span>
+                        customerAddress);
+
+                //Pass dates and car number as parameters to CarBooking
+<span class="nc" id="L88">                CarBooking carBooking = new CarBooking(startDate,</span>
+                        endDate, carSelection);
+
+<span class="nc" id="L91">                PrintBookingDetails printSummary = new PrintBookingDetails();</span>
+<span class="nc" id="L92">                printSummary.printBookingDetails(carBooking, cm);</span>
+
+                //Present user an option of booking or exiting
+<span class="nc" id="L95">                option = menu.getSelection();</span>
+            } else {//exit booking if user selects 2
+
+                break;
+            }
+<span class="nc bnc" id="L100" title="All 2 branches missed.">        } while (!(option == 2));//Exit bookng iteration when option 2 selected</span>
+        //Exit the system.
+<span class="nc" id="L102">        System.exit(0);</span>
+
+<span class="nc" id="L104">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

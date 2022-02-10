@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.example</groupId>
+    <artifactId>JaCoCo-Test</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+
+    <properties>
+        <junit.jupiter.version>5.6.2</junit.jupiter.version>
+        <!-- configure the compiler plugin via properties rather than plugin -->
+        <!-- https://maven.apache.org/plugins/maven-compiler-plugin/examples/set-compiler-source-and-target.html -->
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
+        <!-- to generate html junit reports for test phase -->
+        <maven-site-plugin.version>3.7.1</maven-site-plugin.version>
+        <maven.surefire.report.version>3.0.0-M4</maven.surefire.report.version>
+    </properties>
+
+    <dependencies>
+        <!-- adding the api and engine allow JUnit 5 to work -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.arakhne.afc.core</groupId>
+            <artifactId>inputoutput</artifactId>
+            <version>17.0</version>
+        </dependency>
+        <!-- adding JUnit Vintage allows JUnit 4 backwards compatibility -->
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- For parameterized data driven tests in JUnit 5-->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--
+            http://hamcrest.org/JavaHamcrest/
+        -->
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest</artifactId>
+            <version>2.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- all of the above for junit 5 with junit 4 backwards compatibility
+             instead of adding junit 4.12 into the mix -->
+        <!--
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        -->
+
+        <!--
+            AssertJ - fluent assertion library
+            https://github.com/assertj
+            https://assertj.github.io/doc/
+        -->
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <!-- use 2.9.1 for Java 7 projects -->
+            <version>3.16.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-report-plugin</artifactId>
+            <version>3.0.0-M5</version>
+        </dependency>
+        <!--
+            Truth - fluent assertion library
+            https://truth.dev/
+            Google assertion library built
+            around same time as AssertJ
+        -->
+        <dependency>
+            <groupId>com.google.truth</groupId>
+            <artifactId>truth</artifactId>
+            <version>1.0.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+
+    <build>
+        <plugins>
+            <!--
+                Maven Surefire Plugin to run the Unit tests
+                https://maven.apache.org/surefire/maven-surefire-plugin/usage.html
+             -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.report.version}</version>
+            </plugin>
+
+            <!--
+                Maven Site Plugin to create the HTML site
+                https://maven.apache.org/surefire/maven-surefire-plugin/usage.html
+             -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>${maven-site-plugin.version}</version>
+            </plugin>
+
+
+            <!-- add code coverage and make sure it covers both Junit4 and Junit5 -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.5</version>
+                <!-- defaults to target/jacoco.exec -->
+                <executions>
+                    <!-- allow Jacoco to run -->
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <!--
+                        Generate the html report for the test phase
+                        https://www.eclemma.org/jacoco/trunk/doc/report-mojo.html
+                    -->
+                    <execution>
+                        <id>report</id>
+                        <!-- generate coverage report for test phase -->
+                        <!-- target/site/jacoco -->
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- `mvn clean test site` to generate the junit html report-->
+    <reporting>
+        <plugins>
+            <!--
+                Maven Reports Plugin to generate the HTML reports
+                https://maven.apache.org/surefire/maven-surefire-report-plugin/index.html
+             -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>3.0.0-M5</version>
+            </plugin>
+
+            <!-- generate the coverage report using Jacoco -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <!-- select non-aggregate reports -->
+                            <report>report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
+
+</project>

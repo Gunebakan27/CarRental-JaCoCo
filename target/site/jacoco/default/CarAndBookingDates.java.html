@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CarAndBookingDates.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCo-Test</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">CarAndBookingDates.java</span></div><h1>CarAndBookingDates.java</h1><pre class="source lang-java linenums">/*
+ * Console based program that will allow a customer to make a partial booking
+ * of a vehicle through a car hire company.
+ * Max Sova CSE1OFX Assessment 3
+ */
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
+
+/**
+ * This class manages user selections of the car be hired, and the dates they
+ * would like to hire
+ *
+ * @author Max Sova CSE1OFX Assessment 3
+ */
+public class CarAndBookingDates {
+    //Scanner keyboard = new Scanner(System.in);//Initialyse scanner.
+
+    int year;
+    int month;
+    int day;
+    public int carSelection;
+
+    // Constructor to initialyse instance variables
+<span class="fc" id="L26">    public CarAndBookingDates() {</span>
+<span class="fc" id="L27">        this.year = 0;</span>
+<span class="fc" id="L28">        this.month = 0;</span>
+<span class="fc" id="L29">        this.day = 0;</span>
+<span class="fc" id="L30">    }</span>
+
+    /**
+     * Prompts user for entry of a Car ID number based on the records available.
+     *
+     * @param carsAvailable
+     * @return carSelection
+     */
+    public int carSelection(int carsAvailable) {
+<span class="fc" id="L39">        Scanner keyboard = new Scanner(System.in);//Initialyse scanner.</span>
+<span class="fc" id="L40">        String input = &quot;&quot;;</span>
+<span class="fc" id="L41">        System.out.println(&quot;Total &quot; + carsAvailable + &quot; cars available.&quot;);</span>
+<span class="fc" id="L42">        System.out.println(&quot;Select the car number from the car list: &quot;);</span>
+
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        while (!keyboard.hasNextInt()) {//Check if the input is integer.</span>
+<span class="fc" id="L45">            input = keyboard.next();</span>
+<span class="fc" id="L46">            System.out.printf(&quot;\&quot;%s\&quot; is not a valid number.Try again.&quot;</span>
+                    + &quot;\n&quot;, input);//Print error message.
+        }
+<span class="fc" id="L49">        carSelection = keyboard.nextInt();//Receive scanner input.</span>
+<span class="fc bfc" id="L50" title="All 4 branches covered.">        while (carSelection &lt; 1 || carSelection &gt; carsAvailable) {</span>
+<span class="fc" id="L51">            System.out.println(&quot;Invalid car selection, try again: &quot;);</span>
+<span class="nc" id="L52">            carSelection = keyboard.nextInt();//Receive scanner input.   </span>
+            // validation loop if input is invalid.
+        }
+
+        //System.out.println(carSelection);
+<span class="fc" id="L57">        return carSelection;</span>
+    }
+
+    /**
+     * Method collates the date inputs and returns as a LocalDate format.
+     *
+     * @return LocalDate localDate
+     */
+    public LocalDate getCarBookingDateFull() {
+<span class="fc" id="L66">        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(&quot;d/M/yyyy&quot;);</span>
+
+        LocalDate localDate;
+
+<span class="nc" id="L70">        promptForYear();</span>
+<span class="nc" id="L71">        promptForMonth();</span>
+<span class="nc" id="L72">        promptForDay();</span>
+
+<span class="nc" id="L74">        String date = day + &quot;/&quot; + month + &quot;/&quot; + year;</span>
+        //System.out.println(date);
+<span class="nc" id="L76">        localDate = LocalDate.parse(date, dateFormatter);</span>
+        //  System.out.println(localDate);
+
+<span class="nc" id="L79">        return localDate;</span>
+    }
+
+    /**
+     * User prompt for year of date. Input validation.
+     *
+     * @return year
+     */
+    public int promptForYear() {
+<span class="fc" id="L88">        Scanner keyboard = new Scanner(System.in);//Initialyse scanner.</span>
+<span class="fc" id="L89">        String input = &quot;&quot;;</span>
+<span class="fc" id="L90">        year = -1;</span>
+        do {// Start validation loop.
+            // Prompt for keyboard input.
+<span class="fc" id="L93">            System.out.println(&quot;Please enter the year - for example '2021': &quot;);</span>
+
+<span class="fc bfc" id="L95" title="All 2 branches covered.">            while (!keyboard.hasNextInt()) {//Check if the input is integer.</span>
+<span class="fc" id="L96">                input = keyboard.next();</span>
+<span class="fc" id="L97">                System.out.printf(&quot;\&quot;%s\&quot; is not a valid year.Try again.&quot;</span>
+                        + &quot;\n&quot;, input);//Print error message.
+            }
+<span class="fc" id="L100">            input = keyboard.next();//Receive scanner string input.</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">            if (validateYear(input)) {//Validating year</span>
+<span class="fc" id="L102">                year = Integer.parseInt(input);//If true, convert to integer</span>
+            }
+
+            //restart validation loop if input is invalid.
+<span class="fc bfc" id="L106" title="All 2 branches covered.">        } while (year == -1);//End of iteration</span>
+<span class="fc" id="L107">        return year;</span>
+    }
+
+    /**
+     * User prompt for month of date.Input validation.
+     *
+     * @return month
+     */
+    public int promptForMonth() {
+<span class="fc" id="L116">        Scanner keyboard = new Scanner(System.in);//Initialyse scanner.</span>
+<span class="fc" id="L117">        String input = &quot;&quot;;</span>
+<span class="fc" id="L118">        month = -1;</span>
+        do {// Start validation loop.
+            // Prompt for keyboard input.
+<span class="fc" id="L121">            System.out.println(&quot;Please enter the month number &quot;</span>
+                    + &quot;- for example '6': &quot;);
+
+<span class="fc bfc" id="L124" title="All 2 branches covered.">            while (!keyboard.hasNextInt()) {//Check if the input is integer.</span>
+<span class="fc" id="L125">                input = keyboard.next();</span>
+<span class="fc" id="L126">                System.out.printf(&quot;\&quot;%s\&quot; is not a valid month number.&quot;</span>
+                        + &quot;Try again.&quot; + &quot;\n&quot;, input);//Print error message.
+            }
+<span class="fc" id="L129">            input = keyboard.next();//Receive scanner string input.</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">            if (validateMonth(input)) {//Validating month</span>
+<span class="fc" id="L131">                month = Integer.parseInt(input);//If true, convert to integer</span>
+            }
+
+            //restart validation loop if input is invalid.
+<span class="fc bfc" id="L135" title="All 2 branches covered.">        } while (month == -1);//End of iteration</span>
+<span class="fc" id="L136">        return month;</span>
+    }
+
+    /**
+     * User prompt for day of date.Input validation.
+     *
+     * @return day
+     */
+    public int promptForDay() {
+<span class="fc" id="L145">        Scanner keyboard = new Scanner(System.in);//Initialyse scanner.</span>
+<span class="fc" id="L146">        String input = &quot;&quot;;</span>
+<span class="fc" id="L147">        day = -1;</span>
+        do {// Start validation loop.
+            // Prompt for keyboard input.
+<span class="fc" id="L150">            System.out.println(&quot;Please enter the day number -&quot;</span>
+                    + &quot;for example '21': &quot;);
+
+<span class="fc bfc" id="L153" title="All 2 branches covered.">            while (!keyboard.hasNextInt()) {//Check if the input is integer.</span>
+<span class="fc" id="L154">                input = keyboard.next();</span>
+<span class="fc" id="L155">                System.out.printf(&quot;\&quot;%s\&quot; is not a valid day number.&quot;</span>
+                        + &quot;Try again.&quot; + &quot;\n&quot;, input);//Print error message.
+            }
+<span class="fc" id="L158">            input = keyboard.next();//Receive scanner string input.</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">            if (validateDay(input)) {//Validating year</span>
+<span class="fc" id="L160">                day = Integer.parseInt(input);//If true, convert to integer</span>
+            }
+
+            //restart validation loop if input is invalid.
+<span class="fc bfc" id="L164" title="All 2 branches covered.">        } while (day == -1);//End of iteration</span>
+
+<span class="fc" id="L166">        return day;</span>
+    }
+
+    /**
+     * Validates a string containing a year. String is parsed as integer. Method
+     * returns True if the integer is within 2020-2029 bracket.
+     *
+     * @param year String
+     */
+    public boolean validateYear(String year) {
+<span class="fc" id="L176">        boolean isValid = false;</span>
+<span class="fc" id="L177">        int testValue = Integer.parseInt(year);</span>
+<span class="fc bfc" id="L178" title="All 4 branches covered.">        if (testValue &gt; 2019 &amp;&amp; testValue &lt; 2030) {</span>
+<span class="fc" id="L179">            isValid = true;</span>
+        }
+
+<span class="fc" id="L182">        return isValid;</span>
+    }
+
+    /**
+     * Validates a string containing a month. String is parsed as integer.
+     * Method returns True if the integer is within 1-12 bracket.
+     *
+     * @param month String
+     */
+    public boolean validateMonth(String month) {
+<span class="fc" id="L192">        boolean isValid = false;</span>
+<span class="fc" id="L193">        int testValue = Integer.parseInt(month);</span>
+<span class="fc bfc" id="L194" title="All 4 branches covered.">        if (testValue &gt; 0 &amp;&amp; testValue &lt; 13) {</span>
+<span class="fc" id="L195">            isValid = true;</span>
+
+        }
+<span class="fc" id="L198">        return isValid;</span>
+    }
+
+    /**
+     * Validates a string containing a day number. String is parsed as integer.
+     * Max date is calculated based on currently selected month number and year.
+     * Method returns True if the integer is within 1-28/29/30/31 bracket.
+     *
+     * @param day String
+     */
+    public boolean validateDay(String day) {
+<span class="fc" id="L209">        boolean isValid = false;</span>
+        int numberOfDays;
+<span class="fc" id="L211">        int testValue = Integer.parseInt(day);</span>
+<span class="fc bfc" id="L212" title="All 3 branches covered.">        switch (month) {//Determine max day number.</span>
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 9:
+            case 10:
+            case 12:
+<span class="fc" id="L220">                numberOfDays = 31;</span>
+<span class="fc" id="L221">                break;</span>
+            case 2:
+<span class="fc bfc" id="L223" title="All 2 branches covered.">                if (year % 4 == 0) {//Checking for leap year.</span>
+<span class="fc" id="L224">                    numberOfDays = 29;</span>
+                } else {
+<span class="fc" id="L226">                    numberOfDays = 28;</span>
+                }
+<span class="fc" id="L228">                break;</span>
+            default:
+<span class="fc" id="L230">                numberOfDays = 30;</span>
+                break;
+        }
+
+<span class="fc bfc" id="L234" title="All 4 branches covered.">        if (testValue &gt; 0 &amp;&amp; testValue &lt; (numberOfDays + 1)) {</span>
+<span class="fc" id="L235">            isValid = true;</span>
+
+        }
+<span class="fc" id="L238">        return isValid;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

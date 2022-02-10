@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MenuDisplay.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCo-Test</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">MenuDisplay.java</span></div><h1>MenuDisplay.java</h1><pre class="source lang-java linenums">/*
+ * Console based program that will allow a customer to make a partial booking
+ * of a vehicle through a car hire company.
+ * Max Sova CSE1OFX Assessment 3
+ */
+
+import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author Max Sova CSE1OFX Assessment 3
+ */
+<span class="fc" id="L16">public class MenuDisplay {</span>
+
+    //Declare input file name as constant.
+<span class="fc" id="L19"> static String CARLIST = &quot;src/main/java/CarList.csv&quot;;</span>
+<span class="fc" id="L20">    ArrayList&lt;String[]&gt; table = new ArrayList&lt;String[]&gt;();</span>
+
+    public static String getCARLIST() {
+<span class="fc" id="L23">        return CARLIST;</span>
+    }
+
+    /**
+     * Displays list of cars to user, returns number of available cars
+     *
+     * @return numberOfCars
+     */
+    public int displayCarList() {
+
+        //Initialyze variable
+<span class="fc" id="L34">        int carsAvailable = 0;</span>
+
+        //Print header
+<span class="fc bfc" id="L37" title="All 2 branches covered.">        for (int i = 0; i &lt; 90; i++) {</span>
+<span class="fc" id="L38">            System.out.print(&quot;*&quot;);</span>
+        }
+<span class="fc" id="L40">        System.out.println(&quot;\n                               Welcome to &quot;</span>
+                + &quot;Carrington Car Rental&quot;);
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        for (int i = 0; i &lt; 90; i++) {</span>
+<span class="fc" id="L43">            System.out.print(&quot;*&quot;);</span>
+        }
+<span class="fc" id="L45">        System.out.println(&quot;\nCars available for booking:&quot;);</span>
+
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        for (int i = 0; i &lt; 90; i++) {</span>
+<span class="fc" id="L48">            System.out.print(&quot;_&quot;);</span>
+        }
+<span class="fc" id="L50">        System.out.println();//end of header</span>
+
+
+
+        //Add header elements to the array table
+<span class="fc" id="L55">        table.add(new String[]{&quot;Car No.&quot;, &quot;Car Name&quot;, &quot;Seats&quot;, &quot;Transmission&quot;,</span>
+                &quot;Car Type&quot;, &quot;Rate/Day($)&quot;});
+<span class="fc" id="L57">        table.add(new String[]{&quot;-------&quot;, &quot;--------&quot;, &quot;-----&quot;, &quot;------------&quot;,</span>
+                &quot;--------&quot;, &quot;-----------&quot;});
+<span class="fc" id="L59">        fileRead();</span>
+
+        //Print table
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        for (String[] arr : table) {</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">            for (String item : arr) {</span>
+<span class="fc" id="L64">                System.out.format(&quot;%-16s&quot;, item);</span>
+            }
+
+<span class="fc" id="L67">            System.out.println(&quot;\n&quot;);</span>
+<span class="fc" id="L68">        }//end of table</span>
+
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        for (int i = 0; i &lt; 90; i++) {</span>
+<span class="fc" id="L71">            System.out.print(&quot;_&quot;);</span>
+        }//end of table
+
+        //Calculate number of cars
+<span class="fc" id="L75">        carsAvailable = table.size() - 2;</span>
+<span class="fc" id="L76">        System.out.println(&quot;\nTotal &quot; + carsAvailable + &quot; cars available\n&quot;);</span>
+<span class="fc" id="L77">        System.out.println(&quot;**Note for premium cars, there's additional 5%&quot;</span>
+                + &quot; insurance access applied \n to the car rate.&quot;);
+<span class="fc" id="L79">        System.out.println();</span>
+<span class="fc" id="L80">        System.out.println();</span>
+
+<span class="fc" id="L82">        return carsAvailable;</span>
+    }
+
+
+    //Instantiate file reader, access file inside try-catch block
+    public String fileRead() {
+<span class="fc" id="L88">        try (BufferedReader br = new BufferedReader(new FileReader(CARLIST))) {</span>
+            String line;
+            //Iterate through car list
+<span class="fc bfc" id="L91" title="All 2 branches covered.">            while ((line = br.readLine()) != null) {</span>
+                //Add car records to array
+<span class="fc" id="L93">                String[] values = line.split(&quot;,&quot;);</span>
+<span class="fc" id="L94">                table.add(values);</span>
+<span class="fc" id="L95">            }</span>
+<span class="fc" id="L96">            br.close();</span>
+<span class="fc" id="L97">        } catch (Exception e) {//try/catch file not found exception</span>
+
+//        System.exit(1);//exiting if file not found
+<span class="fc" id="L100">        }return &quot;Source file cannot be opened.&quot;;}</span>
+
+    /**
+     * Prompt to make booking or exit from the system.
+     *
+     * @return selection
+     */
+    public int getSelection() {
+
+        //initialyze variable
+<span class="fc" id="L110">        int option = 0;</span>
+
+<span class="fc" id="L112">        Scanner keyboard = new Scanner(System.in);//Initialize Scanner </span>
+        do {// Start selection loop.
+
+            // Prompt for keyboard input.
+<span class="fc" id="L116">            System.out.println();</span>
+
+<span class="fc bfc" id="L118" title="All 2 branches covered.">            for (int i = 0; i &lt; 50; i++) {</span>
+<span class="fc" id="L119">                System.out.print(&quot;*&quot;);</span>
+            }
+<span class="fc" id="L121">            System.out.println(&quot;\nSelect from one of the following options.&quot;</span>
+                    + &quot;\n&quot;);
+<span class="fc" id="L123">            System.out.println(&quot;1. To make a booking&quot;);</span>
+<span class="fc" id="L124">            System.out.println(&quot;2. To exit the system&quot; + &quot;\n&quot;);</span>
+<span class="fc" id="L125">            System.out.print(&quot;Enter your selection:  &quot;);</span>
+
+<span class="fc bfc" id="L127" title="All 2 branches covered.">            while (!keyboard.hasNextInt()) {//check if the input is integer.</span>
+<span class="fc" id="L128">                String input = keyboard.next();</span>
+<span class="fc" id="L129">                System.out.printf(&quot;\&quot;%s\&quot; is not a valid selection.Try again.&quot;</span>
+                        + &quot;\n&quot;, input);//Print error message.
+<span class="fc" id="L131">            }</span>
+<span class="fc" id="L132">            option = keyboard.nextInt();//Receive scanner input, store as option</span>
+
+            //restart validation loop if input is invalid.
+<span class="fc bfc" id="L135" title="All 4 branches covered.">        } while (!(option == 1 || option == 2));//End of validation.</span>
+
+<span class="fc" id="L137">        return option;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -1,0 +1,9 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+JaCoCo-Test,default,MenuDisplay,0,284,0,22,0,54,0,17,0,6
+JaCoCo-Test,default,PrintBookingDetails,0,143,0,4,0,31,0,4,0,2
+JaCoCo-Test,default,Car,0,33,0,0,0,14,0,7,0,7
+JaCoCo-Test,default,CarBooking,0,208,0,4,0,59,0,25,0,23
+JaCoCo-Test,default,Customer,0,33,0,0,0,14,0,7,0,7
+JaCoCo-Test,default,CarRentalTester,107,0,8,0,30,0,6,0,2,0
+JaCoCo-Test,default,PremiumCar,0,21,0,0,0,5,0,2,0,2
+JaCoCo-Test,default,CarAndBookingDates,38,280,0,41,7,76,0,30,0,9
