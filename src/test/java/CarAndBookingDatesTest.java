@@ -6,7 +6,10 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 import static org.junit.Assert.*;
 
@@ -58,15 +61,16 @@ class CarAndBookingDatesTest {
     }
 
     @Test
-    void getCarBookingDateFull() throws Exception {
-        promptForYear();
-        promptForMonth();
-        promptForDay();
-        assertThrows(NoSuchElementException.class,()-> instance.getCarBookingDateFull());
-//        String date = "20" + "/" + "10" + "/" + "2020";
-//        //System.out.println(date);
-//        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("d/M/yyyy");
-//        LocalDate localDate = LocalDate.parse(date, dateFormatter);
+    void getCarBookingDateFull ()  {
+
+
+        instance.year=2021;
+        instance.month=6;
+        instance.day=21;
+        String date = instance.day + "/" + instance.month + "/" + instance.year;
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+        LocalDate localDate = LocalDate.parse(date, dateFormatter);
+        assertEquals(localDate,instance.getCarBookingDateFull());
 
 
     }
@@ -120,7 +124,7 @@ class CarAndBookingDatesTest {
 
     @Test
     void promptForYear() throws Exception{
-        InputOutput inputOutput= new InputOutput();
+//        InputOutput inputOutput= new InputOutput();
 
         String input = "2021";
         InputStream in = new ByteArrayInputStream(input.getBytes());
@@ -141,7 +145,7 @@ class CarAndBookingDatesTest {
 
     @Test
     void promptForMonth() {
-        InputOutput inputOutput= new InputOutput();
+//        InputOutput inputOutput= new InputOutput();
 
         String input = "6";
         InputStream in = new ByteArrayInputStream(input.getBytes());
@@ -159,7 +163,7 @@ class CarAndBookingDatesTest {
 
     @Test
     void promptForDay() {
-        InputOutput inputOutput= new InputOutput();
+//        InputOutput inputOutput= new InputOutput();
 
         String input = "21";
         InputStream in = new ByteArrayInputStream(input.getBytes());

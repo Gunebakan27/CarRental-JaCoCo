@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: CarBookingTest
+Test set: CarRentalTesterTest
 -------------------------------------------------------------------------------
-Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.071 s - in CarBookingTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.033 s - in CarRentalTesterTest

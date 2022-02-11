@@ -15,7 +15,7 @@ import java.util.Scanner;
  *
  * @author Max Sova CSE1OFX Assessment 3
  */
-public class CarRentalTester {
+public class CarRentalMain {
 
     private MenuDisplay menu;
     private Customer customer;

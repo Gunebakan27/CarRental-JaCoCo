@@ -46,15 +46,17 @@ public class CarAndBookingDates {
 <span class="fc" id="L46">            System.out.printf(&quot;\&quot;%s\&quot; is not a valid number.Try again.&quot;</span>
                     + &quot;\n&quot;, input);//Print error message.
         }
-<span class="fc" id="L49">        carSelection = keyboard.nextInt();//Receive scanner input.</span>
-<span class="fc bfc" id="L50" title="All 4 branches covered.">        while (carSelection &lt; 1 || carSelection &gt; carsAvailable) {</span>
-<span class="fc" id="L51">            System.out.println(&quot;Invalid car selection, try again: &quot;);</span>
-<span class="nc" id="L52">            carSelection = keyboard.nextInt();//Receive scanner input.   </span>
+        do{
+<span class="fc" id="L50">        carSelection = keyboard.nextInt();//Receive scanner input.</span>
+<span class="fc" id="L51">            System.out.println(&quot;Invalid car selection, try again: &quot;);}</span>
+<span class="fc bfc" id="L52" title="All 4 branches covered.">        while (carSelection &lt; 1 || carSelection &gt; carsAvailable);</span>
+
+//            carSelection = keyboard.nextInt();//Receive scanner input.
             // validation loop if input is invalid.
-        }
+
 
         //System.out.println(carSelection);
-<span class="fc" id="L57">        return carSelection;</span>
+<span class="fc" id="L59">        return carSelection;</span>
     }
 
     /**
@@ -63,20 +65,18 @@ public class CarAndBookingDates {
      * @return LocalDate localDate
      */
     public LocalDate getCarBookingDateFull() {
-<span class="fc" id="L66">        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(&quot;d/M/yyyy&quot;);</span>
+<span class="fc" id="L68">        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(&quot;d/M/yyyy&quot;);</span>
 
         LocalDate localDate;
 
-<span class="nc" id="L70">        promptForYear();</span>
-<span class="nc" id="L71">        promptForMonth();</span>
-<span class="nc" id="L72">        promptForDay();</span>
 
-<span class="nc" id="L74">        String date = day + &quot;/&quot; + month + &quot;/&quot; + year;</span>
+
+<span class="fc" id="L74">        String date = day + &quot;/&quot; + month + &quot;/&quot; + year;</span>
         //System.out.println(date);
-<span class="nc" id="L76">        localDate = LocalDate.parse(date, dateFormatter);</span>
+<span class="fc" id="L76">        localDate = LocalDate.parse(date, dateFormatter);</span>
         //  System.out.println(localDate);
 
-<span class="nc" id="L79">        return localDate;</span>
+<span class="fc" id="L79">        return localDate;</span>
     }
 
     /**

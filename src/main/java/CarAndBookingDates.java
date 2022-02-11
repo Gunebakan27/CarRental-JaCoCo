@@ -46,12 +46,14 @@ public class CarAndBookingDates {
             System.out.printf("\"%s\" is not a valid number.Try again."
                     + "\n", input);//Print error message.
         }
+        do{
         carSelection = keyboard.nextInt();//Receive scanner input.
-        while (carSelection < 1 || carSelection > carsAvailable) {
-            System.out.println("Invalid car selection, try again: ");
-            carSelection = keyboard.nextInt();//Receive scanner input.   
+            System.out.println("Invalid car selection, try again: ");}
+        while (carSelection < 1 || carSelection > carsAvailable);
+
+//            carSelection = keyboard.nextInt();//Receive scanner input.
             // validation loop if input is invalid.
-        }
+
 
         //System.out.println(carSelection);
         return carSelection;
@@ -67,9 +69,7 @@ public class CarAndBookingDates {
 
         LocalDate localDate;
 
-        promptForYear();
-        promptForMonth();
-        promptForDay();
+
 
         String date = day + "/" + month + "/" + year;
         //System.out.println(date);
